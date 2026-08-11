@@ -1,0 +1,17 @@
+# Rust build artifacts
+**/target/
+
+# Bundled web build output
+**/dist/
+
+# Local self-signed TLS certs (private)
+certs/
+*.key
+*.crt
+
+# OS noise
+.DS_Store
+
+# Editor noise
+.vscode/
+.idea/

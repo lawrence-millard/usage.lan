@@ -1,0 +1,28 @@
+[workspace]
+
+[package]
+name = "usage-ui"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "usage-ui"
+path = "src/main.rs"
+
+[dependencies]
+open_gpui = { package = "open-gpui", version = "0.2.0", default-features = false }
+open_gpui_web = { package = "open-gpui-web", version = "0.2.0", features = ["multithreaded"] }
+usage-core = { path = "../usage-core" }
+serde_json = "1.0"
+anyhow = "1"
+web-time = "1"
+wasm-bindgen = "0.2.126"
+getrandom = { version = "0.3", features = ["wasm_js"] }
+getrandom_02 = { package = "getrandom", version = "0.2", features = ["js"] }
+futures = "0.3"
+
+[dependencies.open_gpui_platform]
+package = "open-gpui-platform"
+version = "0.2.0"
+features = ["web-multithreaded"]

@@ -1,6 +1,17 @@
 # usage.lan
 
-Self-hosted AI usage & spend dashboard. Aggregates token usage and cost across your local AI coding tools — OpenCode, Codex, and Cursor — and serves a live web dashboard.
+Local AI usage & spend dashboard for your coding tools.
+
+Reads token usage and cost from **OpenCode**, **Codex**, and **Cursor** already on your machine, then serves a live web UI. **Data stays local** — nothing is uploaded.
+
+```sh
+cd dashboard
+rustup target add wasm32-unknown-unknown   # pinned nightly in rust-toolchain.toml
+(cd crates/usage-ui && trunk build --release)
+USAGE_PORT=8080 cargo run -p usage-server
+```
+
+Open [http://localhost:8080](http://localhost:8080). Requires Rust nightly and [`trunk`](https://trunkrs.dev/). Details below.
 
 ## Features
 
@@ -27,10 +38,12 @@ dashboard/
 
 ## Requirements
 
-- Rust (see `rust-toolchain.toml` — the UI needs **nightly** + `wasm32-unknown-unknown`)
+- Rust (see `dashboard/rust-toolchain.toml` — the UI needs **nightly** + `wasm32-unknown-unknown`)
 - [`trunk`](https://trunkrs.dev/) to build the UI
 
 ## Building
+
+Commands below run from `dashboard/` (the Rust workspace).
 
 ```sh
 # 1. Add the wasm target (pinned in rust-toolchain.toml):
@@ -42,10 +55,10 @@ trunk build --release
 cd ../..
 
 # 3. Run the server (serves both the API and the built UI):
-cargo run -p usage-server
+USAGE_PORT=8080 cargo run -p usage-server
 ```
 
-The server serves the UI from `crates/usage-ui/dist` by default (override with `USAGE_DIST`).
+The server serves the UI from `crates/usage-ui/dist` by default (override with `USAGE_DIST`). Default listen port is `443` (set `USAGE_PORT` for an unprivileged port).
 
 ## Usage
 
@@ -64,7 +77,7 @@ GET /api/health
 
 | Var | Default | Purpose |
 |-----|---------|---------|
-| `PORT` / `USAGE_PORT` | `443` | Listen port |
+| `USAGE_PORT` | `443` | Listen port |
 | `USAGE_DIST` | `crates/usage-ui/dist` | Path to built UI |
 | `USAGE_TLS_CERT` | — | PEM cert path (enables HTTPS when set with key) |
 | `USAGE_TLS_KEY` | — | PEM key path |
@@ -93,3 +106,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 ## License
 
 [MIT](LICENSE)
+
+Built by [Lawrence Millard](https://millard.ink).

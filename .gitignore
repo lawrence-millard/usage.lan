@@ -9,6 +9,11 @@ certs/
 *.key
 *.crt
 
+# Accidental screenshots dropped at repo root
+/*.jpg
+/*.jpeg
+/*.png
+
 # OS noise
 .DS_Store
 
